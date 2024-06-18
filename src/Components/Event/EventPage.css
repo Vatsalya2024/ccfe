@@ -48,23 +48,25 @@ body {
     background: linear-gradient(45deg, #4e4376, #2b5876); 
   }
   
-  .card {
+  .cards {
     margin-bottom: 20px;
     box-shadow: 10px 4px 20px rgba(250, 249, 249, 0.1);
     border: none;
     transition: box-shadow 0.3s ease; 
     color:  #ffd500;
+
     
   }
   
-  .card-title {
-    color: #f3f3f7; 
+  .cards-title {
+    color: #ffd500; 
     margin-bottom: 10px;
     font-size: 1.5rem; 
   }
   
-  .card-body {
+  .cards-body {
     padding: 20px;
+    background-color: (45deg, #ffa751, #ffe259); 
   }
   
   .list-group-item {

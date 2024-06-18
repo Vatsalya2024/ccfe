@@ -74,13 +74,14 @@ const Register = () => {
       if (data.isEventOrginizer) {
         navigate("/admin-page"); 
       } else {
-        navigate("/"); 
+        navigate("/user-page"); 
       }
     } catch (error) {
       console.error("Error:", error);
       setLoginError("Login credentials are incorrect"); 
     }
   };
+
 
   return (
     <div id="back">

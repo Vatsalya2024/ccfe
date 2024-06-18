@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import './EventPage.css'; 
 
 const EventPage = () => {
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const navigate = useNavigate();
   const [newEvent, setNewEvent] = useState({
     title: '',
     description: '',
@@ -17,6 +19,10 @@ const EventPage = () => {
     fetchEvents();
   }, []);
 
+  const handleLogout = () => {
+    sessionStorage.clear();
+    navigate("/"); 
+  };
   const fetchEvents = async () => {
     try {
       const response = await fetch('https://localhost:7092/api/Event');
@@ -106,6 +112,7 @@ const EventPage = () => {
       console.error('Error updating event:', error);
     }
   };
+ 
 
   return (
     <div className="container-fluid">
@@ -114,11 +121,15 @@ const EventPage = () => {
         <nav id="sidebar" className="col-md-3 col-lg-2 d-md-block bg-light sidebar">
           <div className="position-sticky">
             <ul className="nav flex-column">
+            <button className="btn btn-secondary mt-2" onClick={handleLogout}>
+              Logout
+            </button>
               {events.map(event => (
                 <li key={event.id} className="nav-item">
                   <button className="nav-link" onClick={() => handleSelectEvent(event.id)}>
                     {event.title}
                   </button>
+                 
                 </li>
               ))}
             </ul>
@@ -128,12 +139,12 @@ const EventPage = () => {
        
         <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
           <div className="pt-3 pb-2 mb-3">
-            <h2>Event Details</h2>
+          
           </div>
 
       
-          <div className="card mb-4">
-            <div className="card-body">
+          <div className="cards mb-4">
+            <div className="cards-body">
               <h5 className="card-title">All Events</h5>
               <ul className="list-group">
                 {events.map(event => (
@@ -148,24 +159,24 @@ const EventPage = () => {
         
           <div className="card mb-4">
             <div className="card-body">
-              <h5 className="card-title">Event by ID</h5>
+              <h5 className="cards-title">Event by ID</h5>
               {selectedEvent ? (
                 <div>
                   <h2>Title:{selectedEvent.title}</h2>
                   <p>Description: {selectedEvent.description}</p>
-                  <button className="btn btn-danger mr-2" onClick={() => handleDeleteEvent(selectedEvent.id)}>Delete</button>
-                  <button className="btn btn-primary" onClick={() => handleUpdateEvent(selectedEvent.id)}>Update</button>
+                  {/* <button className="btn btn-danger mr-2" onClick={() => handleDeleteEvent(selectedEvent.id)}>Delete</button>
+                  <button className="btn btn-primary" onClick={() => handleUpdateEvent(selectedEvent.id)}>Update</button> */}
                 </div>
               ) : (
-                <p>Please select an event from the sidebar to view details.</p>
+                <p>Select an event!</p>
               )}
             </div>
           </div>
 
       
           <div className="card mb-4">
-            <div className="card-body">
-              <h5 className="card-title">Add New Event</h5>
+            <div className="cards-body">
+              <h5 className="cards-title">Add New Event</h5>
               <form onSubmit={handleAddEvent}>
                 <div className="form-group">
                   <label>Title</label>
@@ -197,8 +208,8 @@ const EventPage = () => {
           </div>
 
           <div className="card mb-4">
-            <div className="card-body">
-              <h5 className="card-title">Update Event</h5>
+            <div className="cards-body">
+              <h5 className="cards-title">Update Event</h5>
               {selectedEvent && (
                 <form onSubmit={() => handleUpdateEvent(selectedEvent.id)}>
                   <div className="form-group">
@@ -225,12 +236,13 @@ const EventPage = () => {
 
          
           <div className="card mb-4">
-            <div className="card-body">
+            <div className="cards-body">
                             <h5 className="card-title">Delete Event</h5>
               {selectedEvent && (
                 <div>
                   <p>Are you sure you want to delete the event "{selectedEvent.title}"?</p>
                   <button className="btn btn-danger mr-2" onClick={() => handleDeleteEvent(selectedEvent.id)}>Delete Event</button>
+                  
                 </div>
               )}
             </div>
